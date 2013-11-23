@@ -7,7 +7,7 @@ require_once('../cavirtex_merchant_api.php');
 $cavirtex = new Cavirtex_Merchant_Api(CAVIRTEX_MERCHANT_KEY, CAVIRTEX_MERCHANT_SECRET);
 
 // create a new purchase/invoice (redirects to cavirtex.com invoice, unless format is 'json')
-$cavirtex->merchant_purchase(array(
+$response = $cavirtex->purchase(array(
 	'name1'     => 'item #1',
 	'code1'     => 'code1',
 	'price1'    => 0.01,
@@ -31,3 +31,4 @@ $cavirtex->merchant_purchase(array(
 	
 	//'format' => 'json',
 ));
+var_dump($response);
