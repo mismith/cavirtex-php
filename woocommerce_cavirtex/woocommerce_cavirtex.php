@@ -34,6 +34,7 @@ function init_cavirtex_payment_gateway(){
 			$this->enabled         = $this->is_valid_for_use();
 			$this->title           = $this->get_option( 'title' );
 			$this->description     = $this->get_option( 'description' );
+			$this->bill_as         = $this->get_option( 'bill_as' );
 			$this->merchant_key    = $this->get_option( 'merchant_key' );
 			$this->merchant_secret = $this->get_option( 'merchant_secret' );
 			//$this->ipn_url = str_replace( 'https:', 'http:', add_query_arg( 'wc-api', 'WC_Gateway_Cavirtex', home_url( '/' ) ) );
@@ -79,6 +80,13 @@ function init_cavirtex_payment_gateway(){
 					'default'     => __( $this->method_description, 'woocommerce' ),
 					'desc_tip'    => TRUE,
 				),
+				'bill_as' => array(
+					'title'       => __( 'Bill As', 'woocommerce' ),
+					'type'        => 'text',
+					'description' => __( 'This is what the customer will see their order listed as on the CaVirtEx invoice.', 'woocommerce' ),
+					'default'     => __( 'WooCommerce Order', 'woocommerce' ),
+					'desc_tip'    => TRUE,
+				),
 				'merchant_key' => array(
 					'title'       => __( 'CaVirtEx Merchant Key', 'woocommerce' ),
 					'type'        => 'text',
@@ -102,7 +110,7 @@ function init_cavirtex_payment_gateway(){
 		public function get_cavirtex_params( WC_Order $order ) {
 			$params = array(
 				'code'     => $order->id,
-				'name'     => __( 'WooCommerce Order', 'woocommerce' ),
+				'name'     => $this->bill_as,
 				'price'    => $order->get_total() - $order->get_shipping() /* - $order->get_total_tax() */,
 				'quantity' => 1,
 				
