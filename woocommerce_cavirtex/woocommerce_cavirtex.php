@@ -226,8 +226,6 @@ function init_cavirtex_payment_gateway(){
 				// mark as complete
 				$order->payment_complete();
 				
-				die(var_dump($order));
-				
 				// return thank you page redirect
 				return array(
 					'result'   => 'success',

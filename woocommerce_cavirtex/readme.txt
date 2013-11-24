@@ -14,3 +14,17 @@ After placing the plugin folder in your `/wp-content/plugins/` directory of your
 6. Click the 'Save Changes' button
 
 ![Installation](assets/installation.png)
+
+== Frequently Asked Questions ==
+
+= What should my IPN URL be? =
+
+IPN URL = Wordpress Site Address (URL) + **?wc-api=WC_Gateway_Cavirtex**
+
+e.g. `http://example.com/wp?wc-api=WC_Gateway_Cavirtex`
+
+You can find you `Site Address (URL)` in the 'Settings' > 'General' page of your Wordpress Admin Panel
+
+= Where do I set my IPN URL? =
+
+You'll need to set your IPN URL in CaVirtex's [Merchant Profile page](https://www.cavirtex.com/merchant_information).
