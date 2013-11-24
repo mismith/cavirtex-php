@@ -27,4 +27,4 @@ You can find you `Site Address (URL)` in the 'Settings' > 'General' page of your
 
 = Where do I set my IPN URL? =
 
-You'll need to set your IPN URL in CaVirtex's [Merchant Profile page](https://www.cavirtex.com/merchant_information).
+You'll need to set your IPN URL in your [CaVirtEx Merchant Profile page](https://www.cavirtex.com/merchant_information).
