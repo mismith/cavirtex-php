@@ -18,11 +18,13 @@ class Cavirtex_Merchant_Api {
 	/* API methods */
 	public function merchant_purchase($params){
 		// filter out any extra/unnecessary params
+		$acceptN = array(
+			'name',
+			'code',
+			'price',
+			'quantity',
+		);
 		$accept = array(
-			'shipping',
-			'shipping_required',
-			'cancel_url',
-			'return_url',
 			'email',
 			'customer_name',
 			'address',
@@ -31,13 +33,14 @@ class Cavirtex_Merchant_Api {
 			'province',
 			'postal',
 			'country',
+			
+			'tax',
+			'shipping',
+			'shipping_required',
+			'cancel_url',
+			'return_url',
+			
 			'format',
-		);
-		$acceptN = array(
-			'name',
-			'code',
-			'price',
-			'quantity',
 		);
 		foreach($params as $param => $value){
 			if( ! (in_array($param, $accept) || preg_match('/^('.implode($acceptN, '|').')\d*$/', $param))) unset($params[$param]);
@@ -47,16 +50,17 @@ class Cavirtex_Merchant_Api {
 		$url = $this->base_url . 'merchant_purchase/' . $this->merchant_key;
 				
 		// determine whether to redirect to invoice or return an array
-		if($redirect === NULL) $redirect = $params['format'] != 'json';
+		$redirect = $params['format'] != 'json';
 		$params['format'] = 'json'; // always fetch json internally
 		$response = self::http_request($url, $params);
+		
 		if($redirect && isset($response['order_key'])){
 			return $this->merchant_invoice($response['order_key']);
 		}else{
 			return $response;
 		}
 	}
-	public function merchant_invoice($order_key){
+	public function merchant_invoice($order_key, $return_url = FALSE){
 		// handle params
 		$params = array(
 			'merchant_key' => $this->merchant_key,
@@ -67,9 +71,9 @@ class Cavirtex_Merchant_Api {
 		$url = $this->base_url . 'merchant_invoice?' . http_build_query($params);
 		
 		// redirect to invoice
-		return header('Location: ' . $url);
+		return $return_url ? $url : header('Location: ' . $url);
 	}
-	public function merchant_invoice_balance_check($order_key){
+	public function merchant_invoice_balance_check($order_key, $return_boolean = FALSE){
 		// handle params
 		$params = array(
 			'merchant_key' => $this->merchant_key,
@@ -80,10 +84,12 @@ class Cavirtex_Merchant_Api {
 		$url = $this->base_url . 'merchant_invoice_balance_check?' . http_build_query($params);
 		
 		// get the response
-		return self::http_request($url);
+		$response = self::http_request($url);
+		
+		return $return_boolean ? in_array($response['status'], array('credited', 'paid')) : $response;
 	}
 	
-	public function merchant_confirm_ipn($params){
+	public function merchant_confirm_ipn($params, $return_boolean = FALSE){
 		// handle params
 		$params['secret_key'] = $this->merchant_secret;
 		
@@ -91,16 +97,21 @@ class Cavirtex_Merchant_Api {
 		$url = $this->base_url . 'merchant_confirm_ipn';
 		
 		// get the response
-		return self::http_request($url);
+		$response = self::http_request($url, $params);
+		
+		// return boolean
+		return $return_boolean ? $response['status'] == 'ok' : $response;
 	}
 	
-	// receive Instant Payment Notifications from CAVirtEx
-	public static function process_ipn(){
+	// receive Instant Payment Notifications from cavirtex
+	public function process_ipn(){
+		// get the request body contents
 		$payload = file_get_contents("php://input");
 		
-		$data = json_decode($payload, TRUE);
+		// parse JSON into an array
+		$params = json_decode($payload, TRUE);
 		
-		return $data;
+		return $params;
 	}
 	
 	/* API Method Aliases (removes redundant 'merchant_') */
