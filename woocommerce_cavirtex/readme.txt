@@ -1,6 +1,6 @@
 === Bitcoin Payment Gateway for WooCommerce ===
 
-A WooCommerce payment gateway that allows customers to pay using Bitcoin via the Canadian Virtual Exchange (cavirtex).
+A WooCommerce payment gateway that allows customers to pay using Bitcoin via the Canadian Virtual Exchange (CaVirtEx).
 
 == Installation ==
 

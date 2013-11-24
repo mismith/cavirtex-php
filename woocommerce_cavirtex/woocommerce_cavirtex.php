@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Bitcoin Payment Gateway for WooCommerce
- * Description: A WooCommerce payment gateway that allows customers to pay using Bitcoin via the Canadian Virtual Exchange (cavirtex).
+ * Description: A WooCommerce payment gateway that allows customers to pay using Bitcoin via the Canadian Virtual Exchange (CaVirtEx).
  * Version: 1.0
  * Author: mismith
  * Author URI: http://mismith.info/
