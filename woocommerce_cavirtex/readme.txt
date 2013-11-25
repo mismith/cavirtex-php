@@ -4,7 +4,7 @@ A WooCommerce payment gateway that allows customers to pay using Bitcoin via the
 
 == Installation ==
 
-After placing the plugin folder in your `/wp-content/plugins/` directory of your WooCommerce-enabled Wordpress site, activate it in the 'Plugins' menu, then get it up and running as follows:
+After placing the `woocommerce_cavirtex` plugin folder in the `wp-content/plugins` directory of your WooCommerce-enabled Wordpress site, activate it in the 'Plugins' menu, then proceed as follows:
 
 1. Select the 'WooCommerce' > 'Settings' menu item
 2. Select the 'Payment Gateways' tab
