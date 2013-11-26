@@ -86,7 +86,7 @@ class Cavirtex_Merchant_Api {
 		// get the response
 		$response = self::http_request($url);
 		
-		return $return_boolean ? in_array($response['status'], array('credited', 'paid')) : $response;
+		return $return_boolean ? in_array($response['status'], array('credited', 'confirmed', 'complete')) : $response;
 	}
 	
 	public function merchant_confirm_ipn($params, $return_boolean = FALSE){
